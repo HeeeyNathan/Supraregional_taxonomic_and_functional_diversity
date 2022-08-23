@@ -1,10 +1,15 @@
-## README
+# Analysing supraregional taxonomic and functional diversity
+
+Code to re-create analysis for "Seasonal and spatial variation of stream macroinvertebrate taxonomic and functional diversity across three boreal regions".
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
-Repository for code recreating the analyses in "Seasonal and spatial variation 
-of stream macroinvertebrate taxonomic and functional diversity across three 
-boreal regions".
+## Original article:
+Please, use this citation to reference the code:
+
+---
+Baker et al. 2022. Seasonal and spatial variation of stream macroinvertebrate taxonomic and functional diversity across three boreal regions. 'Insect Conservation and Diversity' xx, xx-xx. DOI:
+---
 
 ### Decription of R files:
 
