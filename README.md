@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Analysing supraregional taxonomic and functional diversity
 
 Code to re-create analysis for "Seasonal and spatial variation of stream
