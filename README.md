@@ -66,8 +66,11 @@ To run the code and functions from this repository, you need to install the foll
 install.packages(c("ade4", "adegraphics", "adespatial", "adiv", "BAT", "corrplot", "EnvStats", "FD", "funrar", "geodist", "ggplot2", "ks", "labdsv", "pacman", "plyr", "RColorBrewer", "vegan"))
 ```
 
-Code written by Nathan J. Baker and Francesca Pilotto                                   Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas and Gabone Iturralde (<https://github.com/tanogc/overarching_functional_space>)
+Code written by Nathan J. Baker and Francesca Pilotto
+
+Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas and Gabone Iturralde (<https://github.com/tanogc/overarching_functional_space>)
 
 Email for queries: <Nathan93Baker@gmail.com>
+
 Code written using R version 4.2.1 "Funny-Looking Kid"
 Code written in Rstudio version 2022.07.1+554 "Spotted Wakerobin"
