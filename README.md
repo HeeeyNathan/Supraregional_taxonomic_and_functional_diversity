@@ -14,7 +14,7 @@ Please, use this citation to reference the code:
 
 ## Description of R files:
 
--   1_FS script_all.R: Main code to reproduce the results presented in the paper
+-   1_R_script_supraregional_analysis.R: Main code to reproduce the results presented in the paper
 
 ### Source:
 
@@ -26,7 +26,14 @@ Zuur, A. F., Ieno, E. N. & Smith, G. M. Analyzing Ecological Data. Methods (2007
 
 Borcard, D., Gillet, F. & Legendre, P. Numerical Ecology with R. (Springer New York, 2018). <doi:10.1007/978-1-4419-7976-6>.
 
-Additional functions needed for ordinations \* hcoplot.R \* triplot.rda.R \* plot.lda.R \* polyvars.R \* screestick.R \* panelutils.R \* Rao.R
+Additional functions needed for ordinations 
+-   hcoplot.R 
+-   triplot.rda.R
+-   plot.lda.R
+-   polyvars.R
+-   screestick.R
+-   panelutils.R
+-   Rao.R
 
 ### Source:
 
