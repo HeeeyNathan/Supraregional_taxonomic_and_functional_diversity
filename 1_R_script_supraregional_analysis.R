@@ -35,16 +35,10 @@ library(plyr)
 library(RColorBrewer) #colours
 library(vegan) # community ecology, taxonomic diversity
 
-##### LOAD 3RD-PARTY ADD-ONS --------------------
+##### LOAD 3RD-PARTY ADD-ONS & ADDITIONAL FUNCTIONS --------------------
 # Load add-ons from various sources
-# source("hcoplot.R")
-# source("triplot.rda.R")
-# source("plot.lda.R")
-# source("polyvars.R")
-# source("screestick.R")
-# source("HighstatLibV10.R")
-# source("panelutils.R")
-# source("Rao.R")
+source("triplot.rda.R") # triplots as per Boccard et al. (2018)
+source("HighstatLibV10.R") # pair plots& FUNCTIO
 
 # Additional functions
 source("0_FD_functions.R")
@@ -3041,8 +3035,8 @@ par(op)
 #        height = 18,
 #        noRStudioGD = TRUE)
 ## Set image properties
-#pdf(file = "All_dbRDAs - Community composition - R1_1.pdf", width = 12, height = 16) 
-svg(file = "All_dbRDAs - Community composition - R1_1.svg", width = 12, height = 16) 
+pdf(file = "All_dbRDAs - Community composition - R1.pdf", width = 12, height = 16) 
+# svg(file = "All_dbRDAs - Community composition - R1_1.svg", width = 12, height = 16) 
 ## Set layout properties
 op <- par(mfrow = c(3, 2))
 
@@ -3206,28 +3200,6 @@ legend("bottomright", legend = c("Spring","Autumn"), bty = "n", cex = 1.5, pch =
 par(op)
 dev.off()
 
-#### IDENTIFYING DOMINANT TAXA IN EACH REGION --------------------
-library(funrar)
-# Germany
-comm
-comm_colsum <- colSums(comm)
-ger_comm_colsum <- colSums(comm[1:16, ])
-ger_comm_spr_colsum <- colSums(comm[1:8, ])
-ger_comm_aut_colsum <- colSums(comm[9:16, ])
-swe_comm_colsum <- colSums(comm[17:120, ])
-swe_comm_spr_colsum <- colSums(comm[17:68, ])
-swe_comm_aut_colsum <- colSums(comm[69:120, ])
-fin_comm_colsum <- colSums(comm[121:140, ])
-fin_comm_spr_colsum <- colSums(comm[121:130, ])
-fin_comm_aut_colsum <- colSums(comm[131:140, ])
-comm_colsum <- rbind(comm_colsum,
-                     ger_comm_colsum, ger_comm_spr_colsum, ger_comm_aut_colsum,
-                     swe_comm_colsum, swe_comm_spr_colsum, swe_comm_aut_colsum,
-                     fin_comm_colsum, fin_comm_spr_colsum, fin_comm_aut_colsum)
-comm_colsum_rel <- make_relative(as.matrix(comm_colsum))
-write.csv(comm_colsum, "comm_colsum.csv")
-detach("package:funrar", unload=TRUE)
-
 #### DESCRIPTIVE STATISTICS OF ENVIRONMENTAL VARIABLES -----------------
 ## Germany
 ger_env
@@ -3236,7 +3208,6 @@ ger_env
 (ger_env_stat_aut <- summaryFull(ger_env[9:16, c(1, 2, 5, 15, 16)]))
 (colnames(ger_env_describe <- rbind(t(ger_env_stat), t(ger_env_stat_spr), t(ger_env_stat_aut))))
 (ger_env_describe <- ger_env_describe[, c(8, 9, 10, 2, 3, 13)])
-write.csv(ger_env_describe, "ger_env_describe1.csv")
 
 ## Sweden
 swe_env
@@ -3245,7 +3216,6 @@ swe_env
 (swe_env_stat_aut <- summaryFull(swe_env[53:104, c(1, 2, 5, 18, 19, 21)]))
 (colnames(swe_env_describe <- rbind(t(swe_env_stat), t(swe_env_stat_spr), t(swe_env_stat_aut))))
 (swe_env_describe <- swe_env_describe[, c(7, 8, 9, 2, 3, 12)])
-write.csv(swe_env_describe, "swe_env_describe1.csv")
 
 ## Finland
 fin_env
@@ -3254,7 +3224,6 @@ fin_env
 (fin_env_stat_aut <- summaryFull(fin_env[11:20, c(1, 2, 7, 9, 10)]))
 (colnames(fin_env_describe <- rbind(t(fin_env_stat), t(fin_env_stat_spr), t(fin_env_stat_aut))))
 (fin_env_describe <- fin_env_describe[, c(7, 8, 9, 2, 3, 12)])
-write.csv(fin_env_describe, "fin_env_describe1.csv")
 
 #### VARIANCE PARTITIONING --------------------
 ### GERMANY --------------------
@@ -3606,7 +3575,6 @@ rownames(ger_varpart_fract) <- c("Season", "Geography", "Acidity", "Nutrients",
                                  "Season7", "Geography7", "Acidity7", "Nutrients7", 
                                  "Season8", "Geography8", "Acidity8", "Nutrients8", 
                                  "Season9", "Geography9", "Acidity9", "Nutrients9")
-write.csv(ger_varpart_fract, "ger_varpart_names.csv")
 
 ### SWEDEN --------------------
 ## ORGANIZE DATA
@@ -3959,7 +3927,6 @@ rownames(swe_varpart_fract) <- c("Season", "Geography", "Acidity", "Nutrients",
                                  "Season7", "Geography7", "Acidity7", "Nutrients7", 
                                  "Season8", "Geography8", "Acidity8", "Nutrients8", 
                                  "Season9", "Geography9", "Acidity9", "Nutrients9")
-write.csv(swe_varpart_fract, "swe_varpart_names.csv")
 
 ### FINLAND --------------------
 ## ORGANIZE DATA
@@ -4316,7 +4283,6 @@ rownames(fin_varpart_fract) <- c("Season", "Geography", "Acidity", "Nutrients",
                                  "Season7", "Geography7", "Acidity7", "Nutrients7", 
                                  "Season8", "Geography8", "Acidity8", "Nutrients8", 
                                  "Season9", "Geography9", "Acidity9", "Nutrients9")
-write.csv(fin_varpart_fract, "fin_varpart_names.csv")
 
 #### REGRESSIONS OF VARPART OUTPUTS (TO GET DIRECTIONS OF CHANGE) --------------------
 ### GERMANY --------------------

@@ -26,34 +26,26 @@ Please, use this citation to reference the code:
 
 Zuur, A. F., Ieno, E. N. & Smith, G. M. Analyzing Ecological Data. Methods (2007). <doi:10.1016/B978-0-12-387667-6.00013-0>.
 
--   HighstatLibV10.R - For pairplots of response and explanatory variables
+-   HighstatLibV10.R: For pairplots of response and explanatory variables
 
 #### Source:
 
 Borcard, D., Gillet, F. & Legendre, P. Numerical Ecology with R. (Springer New York, 2018). <doi:10.1007/978-1-4419-7976-6>.
 
-Additional functions needed for ordinations
-
--   hcoplot.R
--   triplot.rda.R
--   plot.lda.R
--   polyvars.R
--   screestick.R
--   panelutils.R
--   Rao.R
+-   triplot.rda.R: For triplots of dbRDAs
 
 #### Source:
 
 <https://github.com/tanogc/overarching_functional_space>
 
--   0_FD_functions.R - R script to estimate Functional Diversity (FD) metrics This function is a modification of the functions within the 'FD' R package (Laliberté et al., 2014)
--   0_quality_funct_space_fromdist.R - R function for computing the quality of functional dendrogramm and multidimensional functional spaces. This function is a simplified version of the Appendix S1 associated to Maire et al. 2015 (Global Ecol. and Biogeogr.)
+-   0_FD_functions.R: R script to estimate Functional Diversity (FD) metrics This function is a modification of the functions within the 'FD' R package (Laliberté et al., 2014)
+-   0_quality_funct_space_fromdist.R: R function for computing the quality of functional dendrogramm and multidimensional functional spaces. This function is a simplified version of the Appendix S1 associated to Maire et al. 2015 (Global Ecol. and Biogeogr.)
 
 #### Source:
 
 <https://github.com/cran/vegetarian>
 
--   0_vegetarianRpackage_functions.R - Manual addition of the functions in the vegetarian R package - Jost Diversity Measures for Community Data. This package is no longer hosted on CRAN
+-   0_vegetarianRpackage_functions.R: Manual addition of the functions in the vegetarian R package - Jost Diversity Measures for Community Data. This package is no longer hosted on CRAN
 
 ## Original data:
 
