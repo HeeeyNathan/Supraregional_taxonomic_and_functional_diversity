@@ -65,6 +65,9 @@ Additional functions needed for ordinations
 -   site_geo_mat.csv: Geographic coordinates of each site (in degree decimal)
 -   site_grouping_mat.csv: Site grouping factors
 
+-   func_null_model_outputs.csv: Null model outputs of functional diversity metrics. Saves time to rerun null model analyses which are computationally exhaustitive and take alot of time.
+
+
 ## Dependencies:
 
 To run the code and functions from this repository, you need to install the following packages: 'ade4', 'adegraphics', 'adespatial', 'adiv', 'BAT', 'corrplot', 'EnvStats', 'FD', 'funrar', 'geodist', 'ggplot2', 'ks', 'labdsv', 'pacman', 'plyr', 'RColorBrewer', 'vegan'. Use this code to install them:

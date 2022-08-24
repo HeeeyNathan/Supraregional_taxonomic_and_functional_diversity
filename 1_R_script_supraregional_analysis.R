@@ -1,23 +1,24 @@
-#################################################################################################################
-# Supplementary Data 1                                                                                          #
-#                                                                                                               #
-# R script to create results presented in:                                                                      # 
-#                                                                                                               #
-# Seasonal and spatial variation of stream macroinvertebrate taxonomic and functional                           #
-# diversity across three boreal regions                                                                         #
-#                                                                                                               #
-# Nathan J. Baker, Ellen A. R. Welti, Francesca Pilotto, Jonas Jourdan, Burkhard Beudert,                       #
-# Kaisa-Leena Huttunen, Timo Muotka, Riku Paavola, Emma Göthe, Peter Haase                                      #
-#                                                                                                               #
-# Code written by Nathan J. Baker and Francesca Pilotto                                                         #
-# Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas and Gabone Iturralde                #
-# (https://github.com/tanogc/overarching_functional_space)                                                      #
-#                                                                                                               #
-# Email for queries: Nathan93Baker@gmail.com                                                                    #
-# Code written using R version 4.2.1 "Funny-Looking Kid"                                                        #
-# Code written in Rstudio version 2022.07.1+554 "Spotted Wakerobin"                                             #
-#                                                                                                               #
-#################################################################################################################
+################################################################################
+# Supplementary Data 1                                                         #
+#                                                                              #
+# R script to create results presented in:                                     # 
+#                                                                              #
+# Seasonal and spatial variation of stream macroinvertebrate taxonomic and     #
+# functional diversity across three boreal regions                             #
+#                                                                              #
+# Nathan J. Baker, Ellen A. R. Welti, Francesca Pilotto, Jonas Jourdan,        #
+# Burkhard Beudert Kaisa-Leena Huttunen, Timo Muotka, Riku Paavola, Emma Göthe,#
+# Peter Haase                                                                  #
+#                                                                              #
+# Code written by Nathan J. Baker and Francesca Pilotto                        #
+# Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas &  # 
+# Gabone Iturralde (https://github.com/tanogc/overarching_functional_space)    #
+#                                                                              #
+# Email for queries: Nathan93Baker@gmail.com                                   #
+# Code written using R version 4.2.1 "Funny-Looking Kid"                       #
+# Code written in Rstudio version 2022.07.1+554 "Spotted Wakerobin"            #
+#                                                                              #
+################################################################################
 ##### CHANGE YOUR WORKING DIRECTORY --------------------
 setwd() #set your own WD
 
@@ -36,14 +37,14 @@ library(vegan) # community ecology, taxonomic diversity
 
 ##### LOAD 3RD-PARTY ADD-ONS --------------------
 # Load add-ons from various sources
-source("hcoplot.R")
-source("triplot.rda.R")
-source("plot.lda.R")
-source("polyvars.R")
-source("screestick.R")
-source("HighstatLibV10.R")
-source("panelutils.R")
-source("Rao.R")
+# source("hcoplot.R")
+# source("triplot.rda.R")
+# source("plot.lda.R")
+# source("polyvars.R")
+# source("screestick.R")
+# source("HighstatLibV10.R")
+# source("panelutils.R")
+# source("Rao.R")
 
 # Additional functions
 source("0_FD_functions.R")
@@ -105,34 +106,16 @@ d(func_comm[121:140,], lev = "gamma", q = 0)
 
 #### TAXONOMIC ALPHA DIVERSITY --------------------
 ### Compute alpha diversity indices of the communities
-(A <- rowSums(comm))               # Overall abundance
-(N0 <- rowSums(comm > 0))          # Species richness
-(N0 <- specnumber(comm))           # Species richness (alternate)
-(DMa <- (N0-1)/log(A))             # Margalef's richness 
-(H <- diversity(comm))             # Shannon entropy (base e)
-(Hb2 <- diversity(comm, base = 2)) # Shannon entropy (base 2)
-(N1 <- exp(H))                     # Shannon diversity (base e) i.e., the number of abundant species
-(N1b2 <- 2^Hb2)                    # Shannon diversity (base 2)
-(N2 <- diversity(comm, "inv"))     # Simpson diversity i.e., the number of dominant species
-(J <- H / log(N0))                 # Pielou's evenness
-(E10 <- N1 / N0)                   # Shannon evenness (Hill's ratio)
-(E20 <- N2 / N0)                   # Simpson evenness (Hill's ratio)
+A <- rowSums(comm)               # Overall abundance
+N0 <- rowSums(comm > 0)          # Species richness
+H <- diversity(comm)             # Shannon entropy (base e)
+N1 <- exp(H)                     # Shannon diversity (base e) i.e., the number of abundant species
+E10 <- N1 / N0                   # Shannon evenness (Hill's ratio)
 
 div <- data.frame(A, N0, N1, E10)
 
 #### TAXONOMIC BETA DIVERSITY --------------------
 # Beta div = The variation in species composition among sites within a geographic area of interest
-# LCBD = The relative contribution of site i to beta diversity
-# SCBD = The relative contribution of species j to beta diversity
-
-### Computation of LCBD and SCBD
-## Using beta.div {adespatial} on Hellinger-transformed species data
-set.seed(1)
-comm_beta <- beta.div(comm, nperm = 999)
-summary(comm_beta)
-comm_beta$beta # SSTotal and BDTotal
-# Which species have a SCBD larger than the mean SCBD?
-comm_beta$SCBD[comm_beta$SCBD >= mean(comm_beta$SCBD)]
 
 ### Partitioning Beta Diversity into Replacement, Richness Difference and Nestedness 
 # Species replacement = Turnover = The change in community composition between two gradients
@@ -301,7 +284,6 @@ cumsum(supreg.pco$eig)[2]/sum(supreg.pco$eig)*100 # Variance explained by FS (PC
 # Spearman rank correlations between original trait categories and functional space axes
 cor.res <- round(cor(comm_traits[which(rowSums(comm_traits) == 11),], supreg.pco$li, method = "spearman"), 2) #11 trait groups used
 cor.res
-write.table(cor.res, "supreg.pco_axes_corr.csv", sep = ",")
 
 ## PROBABILITY DENSITY USING KERNEL DENSITY ESTIMATION #####
 # Spearman rank correlations between original trait categories and functional space axes, which provides the contribution of each trait on the PCoA axes
@@ -357,15 +339,15 @@ dev.off()
 library(adegraphics)
 supra.gr <- data.frame(group2 = comm_traits_raw$Group2, comm_traits)[(intersect(rownames(comm_traits), colnames(reg.mat))),]
 
-#pdf(file = "Supraregional_FS_taxa_grouping.pdf", onefile = T, width = 6, height = 6)
-svg(file = "Supraregional_FS_taxa_grouping.svg", onefile = T, width = 4, height = 4)
+pdf(file = "Supraregional_FS_taxa_grouping.pdf", onefile = T, width = 6, height = 6)
+# svg(file = "Supraregional_FS_taxa_grouping.svg", onefile = T, width = 4, height = 4)
 par(mfrow = c(1,1), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,4,1))
 s.class(supreg.pco$li, fac = as.factor(supra.gr$group2[which(rowSums(comm_traits)==11)]), plines.col = 1:18, col = T)
 dev.off()
 
 ## PLOT SHOWING REGIONAL TAXON POOL REPRESENTATION WITHIN THE SUPRAREGIONAL FSs #####
-#pdf(file = "Supraregional_and_regional_FS_convexhull.pdf",onefile = T, width = 12, height = 16) 
-svg(file = "Supraregional_and_regional_FS_convexhull.svg",onefile = T, width = 12, height = 16) 
+pdf(file = "Supraregional_and_regional_FS_convexhull.pdf",onefile = T, width = 12, height = 16) 
+# svg(file = "Supraregional_and_regional_FS_convexhull.svg",onefile = T, width = 12, height = 16) 
 par(mfrow = c(4,3), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,3,1))
 
 c("gold", "#228b22","royalblue4", 
@@ -446,8 +428,6 @@ div$FRed <- Redundancy$red$R
 
 ### NULL MODELS OF FD METRICS #####
 ### shuffling null model: keeping the functional space the same, but shuffling taxa within the FS
-#make results repeatable
-set.seed(1)
 # FRic
 ## inputs
 func_comm
@@ -460,7 +440,7 @@ FRic.shuff <- function(x){
   x <- x[order(rownames(x)),]
   fric_3d(func_comm, x, m = 6, prec = "QJ", fric.3d.max = ch_st)
 }
-
+set.seed(1) # make results repeatable
 FRic.obs.null.output.shuff <- cbind(fric_3d(func_comm, supreg.pco$li, m = 6, prec = "QJ", fric.3d.max = ch_st), 
                                     replicate(3, FRic.shuff(supreg.pco$li))) # change this number to 999 after you have determined the code runs
 
@@ -495,7 +475,7 @@ FEve.shuff <- function(x){
   x <- x[order(rownames(x)),]
   feve_k(x, func_comm, m = 6)
 }
-
+set.seed(1) # make results repeatable
 FEve.obs.null.output.shuff <- cbind(feve_k(supreg.pco$li, func_comm, m = 6), 
                                     replicate(3, FEve.shuff(supreg.pco$li))) # change this number to 999 after you have determined the code runs
 
@@ -531,7 +511,7 @@ FDis.shuff <- function(x){
   colnames(x) <- colnames(func_comm)
   fdisp_k(tr.dist, x, m = 6)$FDis
 }
-
+set.seed(1) # make results repeatable
 FDis.obs.null.output.shuff <- cbind(fdisp_k(tr.dist, func_comm, m = 6)$FDis, 
                                     replicate(3, FDis.shuff(func_comm))) # change this number to 999 after you have determined the code runs
 
@@ -825,253 +805,15 @@ turnover <- cbind(comm_beta_div$repl, comm_func_beta_div$repl)
 colnames(turnover) <- c("Tturn", "Fturn")
 turnover <- as.data.frame(turnover)
 
-write.csv(turnover, "Turnover.csv")
-
-#### BOXPLOTS OF TRic, FRic, FRic.SES, BetaT, BetaF, FRed ----------------
+#### BOXPLOTS OF log(Abund), TRic, TEve, Shan, Tturn, FRic, FEve, FDis, FRed, Fturn ----------------
 ### Datasets used
 div
 null <- null.outputs.combined[, c(1, 3, 5)] # Regional null models are used as they are computed on the regional species pools
 
 ### Panel parametres
-pdf("Boxplots - All diversity metrics.pdf", width = 16, height = 12, pointsize = 12, onefile = T)
-#svg("Boxplots - All diversity metrics.svg", width = 16, height = 12, pointsize = 12, onefile = T)
-par(mfrow = c(2, 3), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(7.5,5,3,1))
-
-### Taxonomic richness
-# boxplot(div$N0[1:8], div$N0[9:16], div$N0[17:68], div$N0[69:120], div$N0[121:130], div$N0[131:140]) # test to check axes
-(TRic_plot <- boxplot(div$N0[1:8], div$N0[9:16], div$N0[17:68], div$N0[69:120], div$N0[121:130], div$N0[131:140], 
-                      yaxt = "n", xaxt = "n",  # should the axes be displayed
-                      ylim = c(0, 60), # limits of the y-axis
-                      ylab = "TRic", xlab = "", # names of the axis labels
-                      main = "A",
-                      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                      horizontal = FALSE, #this argument reverses the axis orientation
-                      varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                      notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                      border = TRUE,
-                      outline = FALSE,
-                      cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
-axis(2, col = "black", col.axis = "black", at = seq(0, 60, 10), cex.axis = 1.5) # Y-axis
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-# text(cex = 1.5, x = x, y = -10, labs, xpd = TRUE, srt = 45, font = 1)
-
-### Functional richness
-# boxplot(div$FRic[1:8], div$FRic[9:16], div$FRic[17:68], div$FRic[69:120], div$FRic[121:130], div$FRic[131:140]) # test to check axes
-(FRic_plot <- boxplot(div$FRic[1:8], div$FRic[9:16], div$FRic[17:68], div$FRic[69:120], div$FRic[121:130], div$FRic[131:140], 
-                      yaxt = "n", xaxt = "n",  # should the axes be displayed
-                      ylim = c(0.0, 0.3), # limits of the y-axis
-                      ylab = "FRic", xlab = "", # names of the axis labels
-                      main = "B",
-                      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                      horizontal = FALSE, #this argument reverses the axis orientation
-                      varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                      notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                      border = TRUE,
-                      outline = FALSE,
-                      cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(0.0, 0.3, 0.05), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-# text(cex = 1.5, x = x, y = -0.12, labs, xpd = TRUE, srt = 45, font = 1)
-
-### Corrected functional richness
-#boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140]) # test to check axes
-(FRic.SES_plot <- boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140], 
-                          yaxt = "n", xaxt = "n",  # should the axes be displayed
-                          ylim = c(-2.7, 0.3), # limits of the y-axis
-                          ylab = "FRic S.E.S.", xlab = "", # names of the axis labels
-                          main = "C",
-                          cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                          horizontal = FALSE, #this argument reverses the axis orientation
-                          varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                          notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                          border = TRUE,
-                          outline = FALSE,
-                          cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(-2.7, 0.3, 0.5), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-# text(cex = 1.5, x = x, y = -4.0, labs, xpd = TRUE, srt = 45, font = 1)
-
-### Taxonomic beta div
-# boxplot(ger_pod_pd_spr$D, ger_pod_pd_aut$D, swe_pod_pd_spr$D, swe_pod_pd_aut$D, fin_pod_pd_spr$D, fin_pod_pd_aut$D) # taxo beta div
-(taxo_beta_plot <- boxplot(ger_pod_pd_spr$D, ger_pod_pd_aut$D, swe_pod_pd_spr$D, swe_pod_pd_aut$D, fin_pod_pd_spr$D, fin_pod_pd_aut$D, 
-                           yaxt = "n", xaxt = "n",  # should the axes be displayed
-                           ylim = c(0.0, 1.0), # limits of the y-axis
-                           ylab = "ßt", xlab = "", # names of the axis labels
-                           main = "D",
-                           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                           horizontal = FALSE, #this argument reverses the axis orientation
-                           varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                           notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                           border = TRUE,
-                           outline = FALSE,
-                           cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
-axis(2, col = "black", col.axis = "black", at = seq(0.0, 1.0, 0.1), cex.axis = 1.5) # Y-axis
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -0.15, labs, xpd = TRUE, srt = 45, font = 1)
-
-### Functional beta div
-# boxplot(ger_func_mat_spr, ger_func_mat_aut, swe_func_mat_spr, swe_func_mat_aut, fin_func_mat_spr, fin_func_mat_aut)
-(Func_beta_plot <- boxplot(ger_func_mat_spr, ger_func_mat_aut, swe_func_mat_spr, swe_func_mat_aut, fin_func_mat_spr, fin_func_mat_aut, 
-                           yaxt = "n", xaxt = "n",  # should the axes be displayed
-                           ylim = c(0.0, 1.0), # limits of the y-axis
-                           ylab = "ßf", xlab = "", # names of the axis labels
-                           main = "E",
-                           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                           horizontal = FALSE, #this argument reverses the axis orientation
-                           varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                           notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                           border = TRUE,
-                           outline = FALSE,
-                           cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(0.0, 1.0, 0.1), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -0.15, labs, xpd = TRUE, srt = 45, font = 1)
-
-# Functional redundancy
-# boxplot(div$FRed[1:8], div$FRed[9:16], div$FRed[17:68], div$FRed[69:120], div$FRed[121:130], div$FRed[131:140]) # test to check axes
-(func_redund_plot <- boxplot(div$FRed[1:8], div$FRed[9:16], div$FRed[17:68], div$FRed[69:120], div$FRed[121:130], div$FRed[131:140], 
-                             yaxt = "n", xaxt = "n",  # should the axes be displayed
-                             ylim = c(0.30, 0.60), # limits of the y-axis
-                             ylab = "FRed", xlab = "", # names of the axis labels
-                             main = "F",
-                             cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                             horizontal = FALSE, #this argument reverses the axis orientation
-                             varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                             notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                             border = TRUE,
-                             outline = FALSE,
-                             cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(0.30, 0.60, 0.05), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = 0.25, labs, xpd = TRUE, srt = 45, font = 1)
-dev.off()
-
-#### BOXPLOTS OF TRic, log(Abund), FRic.SES, FRed ----------------
-### Panel parametres
-pdf("Boxplots - Select diversity metrics.pdf", width = 12, height = 12, pointsize = 12, onefile = T)
-#svg("Boxplots - All iversity metrics.svg", width = 12, height = 12, pointsize = 12, onefile = T)
-par(mfrow = c(2, 2), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(7.5,5,3,1))
-
-### Taxonomic richness
-# boxplot(div$N0[1:8], div$N0[9:16], div$N0[17:68], div$N0[69:120], div$N0[121:130], div$N0[131:140]) # test to check axes
-(TRic_plot <- boxplot(div$N0[1:8], div$N0[9:16], div$N0[17:68], div$N0[69:120], div$N0[121:130], div$N0[131:140], 
-                      yaxt = "n", xaxt = "n",  # should the axes be displayed
-                      ylim = c(0, 60), # limits of the y-axis
-                      ylab = "TRic", xlab = "", # names of the axis labels
-                      main = "A",
-                      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                      horizontal = FALSE, #this argument reverses the axis orientation
-                      varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                      notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                      border = TRUE,
-                      outline = FALSE,
-                      cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
-axis(2, col = "black", col.axis = "black", at = seq(0, 60, 10), cex.axis = 1.5) # Y-axis
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-# text(cex = 1.5, x = x, y = -10, labs, xpd = TRUE, srt = 45, font = 1)
-
-### Overall abundance (log(Abund))
-# boxplot(log(div$A[1:8]), log(div$A[9:16]), log(div$A[17:68]), log(div$A[69:120]), log(div$A[121:130]), log(div$A[131:140])) # test to check axes
-(Abund_plot <- boxplot(log(div$A[1:8]), log(div$A[9:16]), log(div$A[17:68]), log(div$A[69:120]), log(div$A[121:130]), log(div$A[131:140]), 
-                       yaxt = "n", xaxt = "n",  # should the axes be displayed
-                       ylim = c(3, 10), # limits of the y-axis
-                       ylab = "log(Abund)", xlab = "", # names of the axis labels
-                       main = "B",
-                       cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                       horizontal = FALSE, #this argument reverses the axis orientation
-                       varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                       notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                       border = TRUE,
-                       outline = FALSE,
-                       cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
-axis(2, col = "black", col.axis = "black", at = seq(3, 10, 1), cex.axis = 1.5) # Y-axis
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-# text(cex = 1.5, x = x, y = -10, labs, xpd = TRUE, srt = 45, font = 1)
-
-
-### Corrected functional richness
-# boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140]) # test to check axes
-(FRic.SES_plot <- boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140], 
-                          yaxt = "n", xaxt = "n",  # should the axes be displayed
-                          ylim = c(-2.7, 0.3), # limits of the y-axis
-                          ylab = "FRic S.E.S.", xlab = "", # names of the axis labels
-                          main = "C",
-                          cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                          horizontal = FALSE, #this argument reverses the axis orientation
-                          varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                          notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                          border = TRUE,
-                          outline = FALSE,
-                          cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(-2.7, 0.3, 0.5), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -3.3, labs, xpd = TRUE, srt = 45, font = 1)
-
-# Functional redundancy
-# boxplot(div$FRed[1:8], div$FRed[9:16], div$FRed[17:68], div$FRed[69:120], div$FRed[121:130], div$FRed[131:140]) # test to check axes
-(func_redund_plot <- boxplot(div$FRed[1:8], div$FRed[9:16], div$FRed[17:68], div$FRed[69:120], div$FRed[121:130], div$FRed[131:140], 
-                             yaxt = "n", xaxt = "n",  # should the axes be displayed
-                             ylim = c(0.30, 0.55), # limits of the y-axis
-                             ylab = "FRed", xlab = "", # names of the axis labels
-                             main = "D",
-                             cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                             horizontal = FALSE, #this argument reverses the axis orientation
-                             varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                             notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                             border = TRUE,
-                             outline = FALSE,
-                             cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE)
-axis(2, col = "black", col.axis = "black", at = seq(0.30, 0.55, 0.05), cex.axis = 1.5)
-x <- c(1:6)
-labs <- c("Ger/Spr", "Ger/Aut", 
-          "Swe/Spr", "Swe/Aut", 
-          "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = 0.25, labs, xpd = TRUE, srt = 45, font = 1)
-
-dev.off()
-
-#### BOXPLOTS OF log(Abund), TRic, TEve, Shan, Tturn, FRic, FEve, FDis, FRed, Fturn ----------------
-### Panel parametres
-#pdf("Boxplots - R1 final.pdf", width = 16, height = 8, pointsize = 12, onefile = T)
-svg("Boxplots - All diversity metrics - vertical.svg", width = 12, height = 16, pointsize = 12, onefile = T)
-par(mfrow = c(5, 2), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(7.5,5,3,1))
+pdf("All Boxplots - R1 final.pdf", width = 8, height = 16, pointsize = 12, onefile = T)
+# svg("Boxplots - All diversity metrics - vertical.svg", width = 8, height = 16, pointsize = 12, onefile = T)
+par(mfrow = c(5, 2), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,2,1))
 
 ### Taxonomic richness
 # boxplot(div$N0[1:8], div$N0[9:16], div$N0[17:68], div$N0[69:120], div$N0[121:130], div$N0[131:140]) # test to check axes
@@ -1161,35 +903,13 @@ labs <- c("Ger/Spr", "Ger/Aut",
           "Fin/Spr", "Fin/Aut")
 # text(cex = 1.5, x = x, y = -10, labs, xpd = TRUE, srt = 45, font = 1)
 
-### Tturn
-# boxplot(turnover$Tturn[1:8], turnover$Tturn[9:60], turnover$Tturn[61:70]) # test to check axes
-(Tturn_plot <- boxplot(turnover$Tturn[1:8], turnover$Tturn[9:60], turnover$Tturn[61:70], 
-                       yaxt = "n", xaxt = "n",  # should the axes be displayed
-                       ylim = c(0.0, 0.7), # limits of the y-axis
-                       ylab = "Tturn", xlab = "", # names of the axis labels
-                       main = "E",
-                       cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
-                       horizontal = FALSE, #this argument reverses the axis orientation
-                       varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
-                       notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
-                       border = TRUE,
-                       outline = FALSE,
-                       cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
-axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
-axis(2, col = "black", col.axis = "black", at = seq(0.0, 0.7, 0.1), cex.axis = 1.5) # Y-axis
-x <- c(1:3)
-labs <- c("Germany",
-          "Sweden",
-          "Finland")
-# text(cex = 1.5, x = x, y = -0.2, labs, xpd = TRUE, srt = 45, font = 1)
-
 ### Corrected functional richness
 #boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140]) # test to check axes
 (FRic.SES_plot <- boxplot(null$FRic.SES[1:8], null$FRic.SES[9:16], null$FRic.SES[17:68], null$FRic.SES[69:120], null$FRic.SES[121:130], null$FRic.SES[131:140], 
                           yaxt = "n", xaxt = "n",  # should the axes be displayed
                           ylim = c(-2.7, 0.3), # limits of the y-axis
                           ylab = "FRic S.E.S.", xlab = "", # names of the axis labels
-                          main = "F",
+                          main = "E",
                           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
                           horizontal = FALSE, #this argument reverses the axis orientation
                           varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
@@ -1203,7 +923,7 @@ x <- c(1:6)
 labs <- c("Ger/Spr", "Ger/Aut", 
           "Swe/Spr", "Swe/Aut", 
           "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -3.2, labs, xpd = TRUE, srt = 45, font = 1)
+# text(cex = 1.5, x = x, y = -3.2, labs, xpd = TRUE, srt = 45, font = 1)
 
 ### Corrected functional evenness
 # boxplot(null$FEve.SES[1:8], null$FEve.SES[9:16], null$FEve.SES[17:68], null$FEve.SES[69:120], null$FEve.SES[121:130], null$FEve.SES[131:140]) # test to check axes
@@ -1211,7 +931,7 @@ text(cex = 1.5, x = x, y = -3.2, labs, xpd = TRUE, srt = 45, font = 1)
                           yaxt = "n", xaxt = "n",  # should the axes be displayed
                           ylim = c(-2.0, 3.0), # limits of the y-axis
                           ylab = "FEve S.E.S.", xlab = "", # names of the axis labels
-                          main = "G",
+                          main = "F",
                           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
                           horizontal = FALSE, #this argument reverses the axis orientation
                           varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
@@ -1225,7 +945,7 @@ x <- c(1:6)
 labs <- c("Ger/Spr", "Ger/Aut", 
           "Swe/Spr", "Swe/Aut", 
           "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -2.8, labs, xpd = TRUE, srt = 45, font = 1)
+# text(cex = 1.5, x = x, y = -2.8, labs, xpd = TRUE, srt = 45, font = 1)
 
 ### Corrected functional dispersion
 #boxplot(null$FDis.SES[1:8], null$FDis.SES[9:16], null$FDis.SES[17:68], null$FDis.SES[69:120], null$FDis.SES[121:130], null$FDis.SES[131:140]) # test to check axes
@@ -1233,7 +953,7 @@ text(cex = 1.5, x = x, y = -2.8, labs, xpd = TRUE, srt = 45, font = 1)
                           yaxt = "n", xaxt = "n",  # should the axes be displayed
                           ylim = c(-2.0, 2.0), # limits of the y-axis
                           ylab = "FDis S.E.S.", xlab = "", # names of the axis labels
-                          main = "H",
+                          main = "G",
                           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
                           horizontal = FALSE, #this argument reverses the axis orientation
                           varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
@@ -1247,7 +967,7 @@ x <- c(1:6)
 labs <- c("Ger/Spr", "Ger/Aut", 
           "Swe/Spr", "Swe/Aut", 
           "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = -2.6, labs, xpd = TRUE, srt = 45, font = 1)
+text(cex = 1.5, x = x, y = -2.75, labs, xpd = TRUE, srt = 45, font = 1)
 
 # Functional redundancy
 # boxplot(div$FRed[1:8], div$FRed[9:16], div$FRed[17:68], div$FRed[69:120], div$FRed[121:130], div$FRed[131:140]) # test to check axes
@@ -1255,7 +975,7 @@ text(cex = 1.5, x = x, y = -2.6, labs, xpd = TRUE, srt = 45, font = 1)
                              yaxt = "n", xaxt = "n",  # should the axes be displayed
                              ylim = c(0.30, 0.60), # limits of the y-axis
                              ylab = "FRed", xlab = "", # names of the axis labels
-                             main = "I",
+                             main = "H",
                              cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
                              horizontal = FALSE, #this argument reverses the axis orientation
                              varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
@@ -1269,7 +989,29 @@ x <- c(1:6)
 labs <- c("Ger/Spr", "Ger/Aut", 
           "Swe/Spr", "Swe/Aut", 
           "Fin/Spr", "Fin/Aut")
-text(cex = 1.5, x = x, y = 0.255, labs, xpd = TRUE, srt = 45, font = 1)
+text(cex = 1.5, x = x, y = 0.240, labs, xpd = TRUE, srt = 45, font = 1)
+
+### Tturn
+# boxplot(turnover$Tturn[1:8], turnover$Tturn[9:60], turnover$Tturn[61:70]) # test to check axes
+(Tturn_plot <- boxplot(turnover$Tturn[1:8], turnover$Tturn[9:60], turnover$Tturn[61:70], 
+                       yaxt = "n", xaxt = "n",  # should the axes be displayed
+                       ylim = c(0.0, 0.7), # limits of the y-axis
+                       ylab = "Tturn", xlab = "", # names of the axis labels
+                       main = "I",
+                       cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, # size of labels and axes
+                       horizontal = FALSE, #this argument reverses the axis orientation
+                       varwidth = FALSE, # varwidth makes the boxplot widths proportional to the sample size
+                       notch = FALSE, # this makes a notch in the boxplot. In the notched boxplot, if two boxes' notches do not overlap this is 'strong evidence' their medians differ (Chambers et al., 1983, p. 62).
+                       border = TRUE,
+                       outline = FALSE,
+                       cex = 1, boxlty = 1, col = c("#638a634d", "#00688c4d", "#638a634d", "#00688c4d", "#638a634d", "#00688c4d")))
+axis(1, col = "black", col.axis = "black", at = seq(1, 6, 1), cex.axis = 1.5, labels = FALSE) # X-axis
+axis(2, col = "black", col.axis = "black", at = seq(0.0, 0.7, 0.1), cex.axis = 1.5) # Y-axis
+x <- c(1:3)
+labs <- c("Germany",
+          "Sweden",
+          "Finland")
+text(cex = 1.5, x = x, y = -0.15, labs, xpd = TRUE, srt = 45, font = 1)
 
 ### Fturn
 # boxplot(turnover$Fturn[1:8], turnover$Fturn[9:60], turnover$Fturn[61:70]) # test to check axes
@@ -1291,16 +1033,14 @@ x <- c(1:3)
 labs <- c("Germany",
           "Sweden",
           "Finland")
-text(cex = 1.5, x = x, y = -0.065, labs, xpd = TRUE, srt = 45, font = 1)
+text(cex = 1.5, x = x, y = -0.09, labs, xpd = TRUE, srt = 45, font = 1)
 
 dev.off()
 par(mfrow = c(1,1))
 
 #### DESCRIPTIVE STATISTICS OF DIVERSITY METRICS -----------------
 div_all <- cbind(div, null)
-write.csv(div_all, "All_diversity_indices.csv")
 turnover
-write.csv(turnover, "Turnover_indices.csv")
 library(EnvStats)
 
 ### Beta diversity
@@ -1447,7 +1187,6 @@ all_desciptives_sel <- all_desciptives_sel[c(3, 1, 9, 4, 10, 15, 2, 8, 6, 5, 13,
                                              18, 16, 24, 19, 25, 30, 17, 23, 21, 20, 28, 27, 26, 29, 22,
                                              33, 31, 39, 34, 40, 45, 32, 38, 36, 35, 43, 42, 41, 44, 37),]
 all_desciptives_sel <- all_desciptives_sel[-c(2, 7, 17, 22, 32, 37),]
-write.csv(all_desciptives_sel, "descriptives_all_indices.csv")
 
 boxplot(log(div_all$A[1:8]), log(div_all$A[9:16]), log(div_all$A[17:68]), log(div_all$A[69:120]), log(div_all$A[121:130]), log(div_all$A[131:140]))
 boxplot(div_all$N0[1:8], div_all$N0[9:16], div_all$N0[17:68], div_all$N0[69:120], div_all$N0[121:130], div_all$N0[131:140])
@@ -1556,98 +1295,9 @@ rownames(fin_stat) <- c("A_fin", "N0_fin", "E10_fin", "N1_fin",
 fin_stat
 
 all_stats <- rbind(ger_stat, swe_stat, fin_stat)
-write.csv(all_stats, "ttests_all_indices.csv")
-
-##### CORRELATION ANALYSES -----------------
-div_all <- cbind(div, null)
-delta <- read.csv(file = "delta_div_indices.csv", h = TRUE, sep = ",", row.names = c(1) ,stringsAsFactors = FALSE)
-
-### Organize data
-## Raw data
-div_all
-corr_raw <- div_all[, c(2, 5, 4, 6, 3, 7)]
-pairs(corr_raw, 
-      lower.panel = panel.smooth, 
-      upper.panel = panel.cor, 
-      diag.panel = panel.hist, 
-      main = "Pearson Correlation Matrix")
-## Standardised functional metrics
-corr_stand <- div_all[, c(2, 9, 4, 10, 3, 11)]
-pairs(corr_stand, 
-      lower.panel = panel.smooth, 
-      upper.panel = panel.cor, 
-      diag.panel = panel.hist, 
-      main = "Pearson Correlation Matrix")
-## Delta data - raw
-corr_delta_raw <- delta[, c(3, 6, 4, 7, 5, 8, 13:14)]
-pairs(corr_delta_raw, 
-      lower.panel = panel.smooth, 
-      upper.panel = panel.cor, 
-      diag.panel = panel.hist, 
-      main = "Pearson Correlation Matrix")
-## Delta data - standardised
-corr_delta_stand <- delta[, c(3, 10, 4, 11, 5, 12, 13:14)]
-pairs(corr_delta_stand, 
-      lower.panel = panel.smooth, 
-      upper.panel = panel.cor, 
-      diag.panel = panel.hist, 
-      main = "Pearson Correlation Matrix")
-
-
-## Change variable names
-colnames(corr_raw) <- c("TRic", "FRic", "TEve", "FEve", "Shan", "FDis")
-colnames(corr_stand) <- c("TRic", "FRic.SES", "TEve", "FEve.SES", "Shan", "FDis.SES")
-colnames(corr_delta_raw) <- c("VTRic", "VFRic", "VTEve", "VFEve", "VShan", "VFDis", "Tturn", "Fturn")
-colnames(corr_delta_stand) <- c("VTRic", "VFRic.SES", "VTEve", "VFEve.SES", "VShan", "VFDis.SES", "Tturn", "Fturn")
-
-### tests
-## Raw data
-(corr.test_raw <- cor(corr_raw, method = "spearman"))
-(N0_FRic_cor <- cor.test(corr_raw$TRic, corr_raw$FRic, method = "spearman", conf.level = 0.95))
-(E10_FEve_cor <- cor.test(corr_raw$TEve, corr_raw$FEve, method = "spearman", conf.level = 0.95))
-(N1_FDis_cor <- cor.test(corr_raw$Shan, corr_raw$FDis, method = "spearman", conf.level = 0.95))
-# write.csv(true_taxo_func_cor_sel, "Correlation_true_values.csv")
-### Standardised functional metrics
-(corr.test_stand <- cor(corr_stand, method = "spearman"))
-(N0_FRic.SES_cor <- cor.test(corr_stand$TRic, corr_stand$FRic.SES, method = "spearman", conf.level = 0.95))
-(E10_FEve.SES_cor <- cor.test(corr_stand$TEve, corr_stand$FEve.SES, method = "spearman", conf.level = 0.95))
-(N1_FDis.SES_cor <- cor.test(corr_stand$Shan, corr_stand$FDis.SES, method = "spearman", conf.level = 0.95))
-# write.csv(corrected_taxo_func_cor_sel, "Correlation_corrected_values.csv")
-# Delta values - raw
-(corr.test_delta <- cor(corr_delta_raw, method = "spearman"))
-(dN0_dFRic_cor <- cor.test(corr_delta_raw$VTRic, corr_delta_raw$VFRic, method = "spearman", conf.level = 0.95))
-(dE10_dFEve_cor <- cor.test(corr_delta_raw$VTEve, corr_delta_raw$VFEve, method = "spearman", conf.level = 0.95))
-(dN1_dFDis_cor <- cor.test(corr_delta_raw$VShan, corr_delta_raw$VFDis, method = "spearman", conf.level = 0.95))
-(Tturn_Fturn_cor <- cor.test(corr_delta_raw$Tturn, corr_delta_raw$Fturn, method = "spearman", conf.level = 0.95))
-# write.csv(delta_taxo_func_cor_sel, "Correlation_delta_values.csv")
-# Delta values - standardised
-(corr.test_delta_stand <- cor(corr_delta_stand, method = "spearman"))
-(dN0_dFRic.SES_cor_stand <- cor.test(corr_delta_stand$VTRic, corr_delta_stand$VFRic.SES, method = "spearman", conf.level = 0.95))
-(dE10_dFEve.SES_cor_stand <- cor.test(corr_delta_stand$VTEve, corr_delta_stand$VFEve.SES, method = "spearman", conf.level = 0.95))
-(dN1_dFDis.SES_cor_stand <- cor.test(corr_delta_stand$VShan, corr_delta_stand$VFDis.SES, method = "spearman", conf.level = 0.95))
-(Tturn_Fturn_cor_stand <- cor.test(corr_delta_stand$Tturn, corr_delta_stand$Fturn, method = "spearman", conf.level = 0.95))
-# write.csv(delta_taxo_func_cor_sel, "Correlation_delta_values.csv")
-
-### Visualisation
-library(corrplot)
-## Set image properties
-#svg("Correlation - Diversity indices.svg", width = 15, height = 5, pointsize = 12, bg = "white", family = "")
-## Set layout properties
-pdf("Correlation plots.pdf", width = 12, height = 12, pointsize = 12, onefile = T)
-# svg("Correlation plots.svg", width = 12, height = 12, pointsize = 12, onefile = T, bg = "white")
-op <- par(mfrow = c(2, 2), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,3,1))
-## Plotting
-corrplot.mixed(corr.test_raw, title = "A")
-corrplot.mixed(corr.test_stand, title = "B")
-corrplot.mixed(corr.test_delta, title = "C")
-corrplot.mixed(corr.test_delta_stand, title = "D")
-
-par(op)
-dev.off()
 
 ##### DB-RDAs OF COMMUNITY COMPOSITION --------------------
 library(labdsv)
-set.seed(1)
 #### GERMANY --------------------
 ### TAXONOMIC COMPOSITION --------------------
 ## Organize data
