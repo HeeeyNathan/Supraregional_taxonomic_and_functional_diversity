@@ -14,13 +14,13 @@ Code to re-create analysis for "Seasonal and spatial variation of stream macroin
 
 Please, use this citation to reference the code:
 
-    Baker et al. 2022. Seasonal and spatial variation of stream macroinvertebrate 
-    taxonomic and functional diversity across three boreal regions. 
-    Insect Conservation and Diversity xx, xx-xx. DOI:
+    Baker et al. 2022. Seasonal and spatial variation of stream 
+    macroinvertebrate taxonomic and functional diversity across three boreal 
+    regions. Insect Conservation and Diversity xx, xx-xx. DOI:
 
 ## Description of R files:
 
--   1_R\_script_supraregional_analysis.R: Main code to reproduce the results presented in the paper
+-   1_R_script_supraregional_analysis.R: Main code to reproduce the results presented in the paper
 
 #### Source:
 
@@ -32,7 +32,15 @@ Zuur, A. F., Ieno, E. N. & Smith, G. M. Analyzing Ecological Data. Methods (2007
 
 Borcard, D., Gillet, F. & Legendre, P. Numerical Ecology with R. (Springer New York, 2018). <doi:10.1007/978-1-4419-7976-6>.
 
-Additional functions needed for ordinations - hcoplot.R - triplot.rda.R - plot.lda.R - polyvars.R - screestick.R - panelutils.R - Rao.R
+Additional functions needed for ordinations
+
+-   hcoplot.R
+-   triplot.rda.R
+-   plot.lda.R
+-   polyvars.R
+-   screestick.R
+-   panelutils.R
+-   Rao.R
 
 #### Source:
 
@@ -62,7 +70,9 @@ Additional functions needed for ordinations - hcoplot.R - triplot.rda.R - plot.l
 To run the code and functions from this repository, you need to install the following packages: 'ade4', 'adegraphics', 'adespatial', 'adiv', 'BAT', 'corrplot', 'EnvStats', 'FD', 'funrar', 'geodist', 'ggplot2', 'ks', 'labdsv', 'pacman', 'plyr', 'RColorBrewer', 'vegan'. Use this code to install them:
 
 ```{r install packages}
-install.packages(c("ade4", "adegraphics", "adespatial", "adiv", "BAT", "corrplot", "EnvStats", "FD", "funrar", "geodist", "ggplot2", "ks", "labdsv", "pacman", "plyr", "RColorBrewer", "vegan"))
+install.packages(c("ade4", "adegraphics", "adespatial", "adiv", "BAT", 
+"corrplot", "EnvStats", "FD", "funrar", "geodist", "ggplot2", "ks", 
+"labdsv", "pacman", "plyr", "RColorBrewer", "vegan"))
 ```
 
 Code written by Nathan J. Baker and Francesca Pilotto
