@@ -1,24 +1,24 @@
-################################################################################
-# Supplementary Data 1                                                         #
-#                                                                              #
-# R script to create results presented in:                                     # 
-#                                                                              #
-# Seasonal and spatial variation of stream macroinvertebrate taxonomic and     #
-# functional diversity across three boreal regions                             #
-#                                                                              #
-# Nathan J. Baker, Ellen A. R. Welti, Francesca Pilotto, Jonas Jourdan,        #
-# Burkhard Beudert Kaisa-Leena Huttunen, Timo Muotka, Riku Paavola, Emma Göthe,#
-# Peter Haase                                                                  #
-#                                                                              #
-# Code written by Nathan J. Baker and Francesca Pilotto                        #
-# Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas &  # 
-# Gabone Iturralde (https://github.com/tanogc/overarching_functional_space)    #
-#                                                                              #
-# Email for queries: Nathan93Baker@gmail.com                                   #
-# Code written using R version 4.2.1 "Funny-Looking Kid"                       #
-# Code written in Rstudio version 2022.07.1+554 "Spotted Wakerobin"            #
-#                                                                              #
-################################################################################
+###################################################################################################
+# Supplementary Data 1                                                                            #
+#                                                                                                 #
+# R script to create results presented in:                                                        # 
+#                                                                                                 #
+# Seasonal and spatial variation of stream macroinvertebrate taxonomic and functional diversity   #
+# across three boreal regions                                                                     #
+#                                                                                                 #
+# Nathan J. Baker, Ellen A. R. Welti, Francesca Pilotto, Jonas Jourdan, Burkhard Beudert,         #
+# Kaisa-Leena Huttunen, Timo Muotka, Riku Paavola, Emma Göthe, Peter Haase                        #
+#                                                                                                 #
+# Code written by Nathan J. Baker and Francesca Pilotto                                           #
+# Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas & Gabone Iturralde    #
+# (https://github.com/tanogc/overarching_functional_space)                                        #
+#                                                                                                 #
+# Email for queries: Nathan93Baker@gmail.com                                                      #
+# Code written using R version 4.2.1 "Funny-Looking Kid"                                          #
+# Code written in Rstudio version 2022.07.1+554 "Spotted Wakerobin"                               #
+#                                                                                                 #
+###################################################################################################
+
 ##### CHANGE YOUR WORKING DIRECTORY --------------------
 setwd() #set your own WD
 
@@ -279,7 +279,7 @@ cumsum(supreg.pco$eig)[2]/sum(supreg.pco$eig)*100 # Variance explained by FS (PC
 cor.res <- round(cor(comm_traits[which(rowSums(comm_traits) == 11),], supreg.pco$li, method = "spearman"), 2) #11 trait groups used
 cor.res
 
-## PROBABILITY DENSITY USING KERNEL DENSITY ESTIMATION #####
+## FIGURE 3A: PROBABILITY DENSITY USING KERNEL DENSITY ESTIMATION #####
 # Spearman rank correlations between original trait categories and functional space axes, which provides the contribution of each trait on the PCoA axes
 cor.res
 supreg.pco$li
@@ -310,7 +310,7 @@ fit122 <- fit12$vectors$arrows*-1 # drawing line segments in arrow opposites dir
 plot(esto12, cont = seq(1, 100, by = 1.79), display  = "filled.contour", add = FALSE, ylab = "PC2", xlab = "PC1", 
      cex.axis = 0.75, ylim = c(-1, 1), xlim = c(-1, 1) , las = 1)
 
-pdf(file="Supraregional_FS_density_vectors.pdf",onefile = T, width = 6, height = 6)
+pdf(file="FIGURE 3A - TRAIT PROBABILITY DENSITY PLOT.pdf",onefile = T, width = 6, height = 6)
 # svg(file="Supraregional_FS_density_vectors.svg",onefile = T, width = 6, height = 6)
 par(cex.lab = 1.25, cex.axis = 1.25, mfrow = c(1,1))
 plot(esto12, cont = seq(1, 100, by = 1.79), display = "filled.contour", add = FALSE, 
@@ -329,18 +329,18 @@ points(pco12[,], pch = 16, cex = 0.25, col = "black")
 plot(fit12, cex = 0.90, col = 1)
 dev.off()
 
-## PLOTTING POSITION OF TAXONOMIC GROUPS WITHIN THE FS #####
+## FIGURE 3B: POSITION OF TAXONOMIC GROUPS WITHIN THE FS #####
 library(adegraphics)
 supra.gr <- data.frame(group2 = comm_traits_raw$Group2, comm_traits)[(intersect(rownames(comm_traits), colnames(reg.mat))),]
 
-pdf(file = "Supraregional_FS_taxa_grouping.pdf", onefile = T, width = 6, height = 6)
+pdf(file = "FIGURE 3B - TAXA GROUPS PLOT.pdf", onefile = T, width = 6, height = 6)
 # svg(file = "Supraregional_FS_taxa_grouping.svg", onefile = T, width = 4, height = 4)
 par(mfrow = c(1,1), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,4,1))
 s.class(supreg.pco$li, fac = as.factor(supra.gr$group2[which(rowSums(comm_traits)==11)]), plines.col = 1:18, col = T)
 dev.off()
 
-## PLOT SHOWING REGIONAL TAXON POOL REPRESENTATION WITHIN THE SUPRAREGIONAL FSs #####
-pdf(file = "Supraregional_and_regional_FS_convexhull.pdf",onefile = T, width = 12, height = 16) 
+## FIGURE 3C-D: REGIONAL TAXON POOL REPRESENTATION WITHIN THE SUPRAREGIONAL FSs #####
+pdf(file = "FIGURE 3 - SUPRAREGIONAL FS (WITHOUT TAXA GROUPS PLOT).pdf",onefile = T, width = 12, height = 16) 
 # svg(file = "Supraregional_and_regional_FS_convexhull.svg",onefile = T, width = 12, height = 16) 
 par(mfrow = c(4,3), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,3,1))
 
@@ -799,13 +799,13 @@ turnover <- cbind(comm_beta_div$repl, comm_func_beta_div$repl)
 colnames(turnover) <- c("Tturn", "Fturn")
 turnover <- as.data.frame(turnover)
 
-#### BOXPLOTS OF log(Abund), TRic, TEve, Shan, Tturn, FRic, FEve, FDis, FRed, Fturn ----------------
+#### FIGURE 2: BOXPLOTS OF DIVERSITY INDICES ----------------
 ### Datasets used
 div
 null <- null.outputs.combined[, c(1, 3, 5)] # Regional null models are used as they are computed on the regional species pools
 
 ### Panel parametres
-pdf("All Boxplots - R1 final.pdf", width = 8, height = 16, pointsize = 12, onefile = T)
+pdf("FIGURE 2 - BOXPLOTS.pdf", width = 8, height = 16, pointsize = 12, onefile = T)
 # svg("Boxplots - All diversity metrics - vertical.svg", width = 8, height = 16, pointsize = 12, onefile = T)
 par(mfrow = c(5, 2), cex.axis = 1.85, cex.lab = 2, cex.main = 2, mar = c(5,5,2,1))
 
@@ -3027,7 +3027,7 @@ text(fin_func_cap_pars, display = "wa", pos = 2, cex = 0.7, scaling = 2, col = "
 legend("bottomright", legend = c("Spring","Autumn"), bty = "n", cex = 1.0, pch = c(19, 17), col =  c("black", "black"))
 par(op)
 
-#### FINAL DB-RDA PLOTS OF COMPOSITION DATA -----------------
+#### FIGURE 4A-F: DB-RDA PLOTS OF COMPOSITION DATA -----------------
 ### Scaling 2
 ## Open new plot window
 # dev.new(title = "Capscale plot with all species.rda",
@@ -3035,7 +3035,7 @@ par(op)
 #        height = 18,
 #        noRStudioGD = TRUE)
 ## Set image properties
-pdf(file = "All_dbRDAs - Community composition - R1.pdf", width = 12, height = 16) 
+pdf(file = "FIGURE 4 - dbRDA PLOTS.pdf", width = 12, height = 16) 
 # svg(file = "All_dbRDAs - Community composition - R1_1.svg", width = 12, height = 16) 
 ## Set layout properties
 op <- par(mfrow = c(3, 2))

@@ -56,7 +56,6 @@ Borcard, D., Gillet, F. & Legendre, P. Numerical Ecology with R. (Springer New Y
 -   site_env_mat.csv: Site-based environmental variable measurements.
 -   site_geo_mat.csv: Geographic coordinates of each site (in degree decimal)
 -   site_grouping_mat.csv: Site grouping factors
-
 -   func_null_model_outputs.csv: Null model outputs of functional diversity metrics. Saves time to rerun null model analyses which are computationally exhaustitive and take alot of time.
 
 
@@ -74,7 +73,7 @@ Code written by Nathan J. Baker and Francesca Pilotto
 
 Code used for functional analyses adapted from Cayetano Gutiérrez-Cánovas and Gabone Iturralde (<https://github.com/tanogc/overarching_functional_space>)
 
-Email for queries: [Nathan93Baker\@gmail.com](mailto:Nathan93Baker@gmail.com){.email}
+Email for queries: <Nathan93Baker@gmail.com>
 
 Code written using R version 4.2.1 "Funny-Looking Kid"
 
