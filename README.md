@@ -1,9 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-
 # Analysing supraregional taxonomic and functional diversity
 
 Code to re-create analysis for "Seasonal and spatial variation of stream macroinvertebrate taxonomic and functional diversity across three boreal regions".
