@@ -19,51 +19,20 @@
 #                                                                                                               #
 #################################################################################################################
 ##### CHANGE YOUR WORKING DIRECTORY --------------------
-setwd("C:/Users/natha/OneDrive/University of Johannesburg/PhD/Senckenberg/Publications/Spatial Analysis/Text/Rivision 1 - 30.05.2022/Statistics")
+setwd() #set your own WD
 
 ##### LOAD LIBRARIES --------------------
 # Load the required packages
 library(ade4)
-#library(adegraphics)
 library(adespatial) # beta diversity
-#library(adiv)
-#library(ape)
-#library(BAT) # beta function for functional dissimilarity matrix
-#library(BiodiversityR)
-#library(car)
-#library(corrplot) # correlation analyses and visualisation
-#library(ellipse)
-#library(EnvStats) # even more descriptive stats but with CV (coefficient of variation)
-#library(FactoMineR)
 library(FD) # functional diversity 
-#library(funrar)
 library(geodist) # geographic distance matrix
 library(ggplot2) # plotting
-#library(gratia)
-#library(gstat)
-#library(INLA)
 library(ks) # kernal density estimation
-#library(labdsv)
-#library(lme4) # lmer
-#library(MASS) # Wilcoxon sign rank-test
-#library(mgcv) # gam
-#library(MuMIn) # AICc
-#library(nlme) # gls
 library(pacman) # package manager
-#library(pastecs)
-#library(picante)
 library(plyr)
-#library(psych) # descriptive stats
 library(RColorBrewer) #colours
-#library(rcompanion) # more descriptive stats
-#library(rrcov)
-#library(sp)
-#library(taxize)
-#library(tidyverse)
 library(vegan) # community ecology, taxonomic diversity
-#library(vegan3d)
-#library(vegetarian) #this package no longer loads
-#library(vioplot)
 
 ##### LOAD 3RD-PARTY ADD-ONS --------------------
 # Load add-ons from various sources
