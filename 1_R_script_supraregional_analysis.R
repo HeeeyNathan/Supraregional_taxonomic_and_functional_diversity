@@ -38,7 +38,7 @@ library(vegan) # community ecology, taxonomic diversity
 ##### LOAD 3RD-PARTY ADD-ONS & ADDITIONAL FUNCTIONS --------------------
 # Load add-ons from various sources
 source("triplot.rda.R") # triplots as per Boccard et al. (2018)
-source("HighstatLibV10.R") # pair plots& FUNCTIO
+source("HighstatLibV10.R") # pair plots as per Zuur et al. (2018)
 
 # Additional functions
 source("0_FD_functions.R")
